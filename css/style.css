@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+}
+
+#browse .table th:nth-child(2),
+#browse .table td:nth-child(2) {
+  width: 25%;
+}
+
+.current-table th.model-col,
+.current-table td.model-col {
+  width: 800px;
+  word-break: break-all;
+}
