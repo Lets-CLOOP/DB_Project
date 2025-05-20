@@ -39,8 +39,9 @@ if (isset($_GET['action'])) {
             $params = [':cat' => $cat];
 
             if ($search !== '') {
-                $sql .= ' AND (m.name LIKE :search OR p.model LIKE :search)';
-                $params[':search'] = "%{$search}%";
+                $sql .= ' AND (m.name LIKE :search1 OR p.model LIKE :search2)';
+                $params[':search1'] = "%{$search}%";
+                $params[':search2'] = "%{$search}%";
             }
 
             foreach ($spec['cols'] as $col) {
