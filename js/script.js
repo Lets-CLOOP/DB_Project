@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: ['Manufacturer', 'Model', 'Type', 'Panel', 'HDD Bays', 'SSD Bays', 'Vol(L)', 'Color', 'Max GPU(mm)', 'Max CPU(mm)', 'PSU Form', 'Price($)'],
           keys:    ['manufacturer', 'model', 'type', 'side_panel', 'hdd_bays', 'ssd_bays', 'volume', 'color', 'max_gpu_length', 'max_cpu_cooler_height', 'psu_form_factor', 'price']
         }
+    };
 
     // Populate the category dropdown
     Object.keys(displayMap).forEach(cat => {
