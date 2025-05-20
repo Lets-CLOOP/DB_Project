@@ -70,7 +70,7 @@ if (isset($_GET['action'])) {
             $title = $data['title'] ?? '';
             $items = $data['items'] ?? [];
             $isPublic = isset($data['is_public']) ? (int)$data['is_public'] : 0;
-            $compat = runCompatibilityCheck($items);
+            $compat = checkCompatibility($items);
             if(!$compat['success']) {
               $isPublic = 0;
             }
