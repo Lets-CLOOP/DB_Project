@@ -3,7 +3,7 @@
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'pc_builder');
 define('DB_USER', 'root');
-define('DB_PASS', 'dlgksdjf1!');       
+define('DB_PASS', 'YOUR_PASSWORD');       
 define('DB_CHARSET', 'utf8mb4');
 
 function getPDO(): \PDO
