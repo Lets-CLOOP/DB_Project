@@ -4,34 +4,34 @@ const categoryOrder = [
 ];
 
 const numericSpecsMap = {
-  CPU:            ['cores','core_clock','boost_clock','tdp'],
-  Motherboard:    ['memory_max','ram_slots','m2_slots','sata_ports'],
-  Memory:         ['modules','capacity'],
-  'CPU Cooler':   ['fan_rpm', 'noise_level', 'radiator_size', 'height'],
-  Case:           ['max_cpu_cooler_height','max_gpu_length','hdd_bays','ssd_bays'],
-  GPU:            ['length','tdp'],
-  PSU:            ['wattage']
+	CPU:            ['cores','core_clock','boost_clock','tdp'],
+	'CPU Cooler':   ['fan_rpm', 'noise_level', 'radiator_size', 'height'],
+	Motherboard:    ['memory_max','ram_slots','m2_slots','sata_ports'],
+	Memory:         ['modules','capacity'],
+	GPU:            ['length','tdp'],
+	PSU:            ['wattage'],
+	Case:           ['max_cpu_cooler_height','max_gpu_length','hdd_bays','ssd_bays']
 };
 
 const filterDisplayLabelMap = {
 	//CPU specs
 	cores:                  'Cores',                core_clock:             'Core Clock(GHz)',
 	boost_clock:            'Boost Clock(GHz)',      tdp:                    'TDP(W)',
+	//Cooler specs
+	fan_rpm:                'RPM',                   noise_level:            'Noise(dB)',
+	radiator_size:          'Radiator Size(mm)',     height:                 'Height(mm)',
 	//Motherboard specs
 	memory_max:             'Max Memory(GB)',        ram_slots:              'RAM Slots',
 	m2_slots:               'M.2 Slots',             sata_ports:             'SATA Ports',
 	//Memory specs
 	modules:                'Modules',               capacity:               'Capacity(GB)',
-	//Cooler specs
-	fan_rpm:                'RPM',                   noise_level:            'Noise(dB)',
-	radiator_size:          'Radiator Size(mm)',     height:                 'Height(mm)',
+	//GPU specs
+	length:                 'Length(mm)',
+	//PSU specs
+	wattage:                'Wattage(W)',
 	//Case specs
 	max_cpu_cooler_height:  'Max Cooler Height(mm)', max_gpu_length:         'Max GPU Length(mm)',
 	hdd_bays:               'HDD Bays',              ssd_bays:               'SSD Bays',
-	//PSU specs
-	wattage:                'Wattage(W)',
-	//GPU specs
-	length:                 'Length(mm)'
 };
 
 let currentItems = [];
