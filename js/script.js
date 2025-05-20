@@ -4,32 +4,33 @@ const categoryOrder = [
 ];
 
 const numericSpecsMap = {
-	CPU:            ['cores','core_clock','boost_clock','tdp'],
+	CPU:            ['cores', 'core_clock', 'boost_clock', 'tdp'],
 	'CPU Cooler':   ['fan_rpm', 'noise_level', 'radiator_size', 'height'],
-	Motherboard:    ['memory_max','ram_slots','m2_slots','sata_ports'],
-	Memory:         ['modules','capacity'],
-	GPU:            ['length','tdp'],
+	Motherboard:    ['memory_max', 'ram_slots', 'm2_slots', 'sata_ports'],
+	Memory:         ['modules', 'capacity'],
+	Storage:        ['capacity'],
+	GPU:            ['memory', 'length', 'tdp'],
 	PSU:            ['wattage'],
-	Case:           ['max_cpu_cooler_height','max_gpu_length','hdd_bays','ssd_bays']
+	Case:           ['max_cpu_cooler_height', 'max_gpu_length', 'hdd_bays', 'ssd_bays']
 };
 
 const filterDisplayLabelMap = {
-	//CPU specs
-	cores:                  'Cores',                core_clock:             'Core Clock(GHz)',
-	boost_clock:            'Boost Clock(GHz)',      tdp:                    'TDP(W)',
-	//Cooler specs
+	// CPU specs
+	cores:                  'Cores',                 core_clock:             'Core Clock(GHz)',
+	boost_clock:            'Boost Clock(GHz)',      tdp:                    'TDP(W)', // With GPU
+	// Cooler specs
 	fan_rpm:                'RPM',                   noise_level:            'Noise(dB)',
 	radiator_size:          'Radiator Size(mm)',     height:                 'Height(mm)',
-	//Motherboard specs
+	// Motherboard specs
 	memory_max:             'Max Memory(GB)',        ram_slots:              'RAM Slots',
 	m2_slots:               'M.2 Slots',             sata_ports:             'SATA Ports',
-	//Memory specs
+	// Memory specs                                  // With storage
 	modules:                'Modules',               capacity:               'Capacity(GB)',
-	//GPU specs
-	length:                 'Length(mm)',
-	//PSU specs
+	// GPU specs 
+	memory:                 'Memory(GB)',            length:                 'Length(mm)',
+	// PSU specs
 	wattage:                'Wattage(W)',
-	//Case specs
+	// Case specs
 	max_cpu_cooler_height:  'Max Cooler Height(mm)', max_gpu_length:         'Max GPU Length(mm)',
 	hdd_bays:               'HDD Bays',              ssd_bays:               'SSD Bays',
 };
@@ -42,48 +43,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableBody    = document.getElementById('tableBody');
     const searchBtn    = document.getElementById('searchBtn');
     const searchInput  = document.getElementById('searchInput');
-    const currentBody  = document.getElementById('currentBody');
-    const currentTotal = document.getElementById('currentTotal');
-    const savedBody    = document.getElementById('savedBody');
     const filtersContainer = document.getElementById('filters');
-    const isPublic     = document.getElementById('publicCheckbox').checked ? 1 : 0;
+    const sortSelect    = document.getElementById('sortSelect');
+
+    // Currently not in use	
+    // const currentBody  = document.getElementById('currentBody');
+    // const currentTotal = document.getElementById('currentTotal');
+    // const savedBody    = document.getElementById('savedBody');
+    // const isPublic     = document.getElementById('publicCheckbox').checked ? 1 : 0;
+	
     let currentItems   = [];
 
     // Configuration for each category: table headers and keys to read from Local DB server
     const displayMap = {
         'CPU': {
-          headers: ['Manufacturer','Model','Socket','Cores','Core Clock(GHz)','Boost Clock(GHz)','Microarchitecture','TDP(W)','iGPU','Price($)'],
-          keys:    ['manufacturer','model','socket','cores','core_clock','boost_clock','architecture','tdp','integrated_graphics','price']
+          headers: ['Manufacturer', 'Model', 'Socket', 'Cores', 'Core Clock(GHz)', 'Boost Clock(GHz)', 'Microarchitecture', 'TDP(W)', 'iGPU', 'Price($)'],
+          keys:    ['manufacturer', 'model', 'socket', 'cores', 'core_clock', 'boost_clock', 'architecture', 'tdp', 'integrated_graphics','price']
         },
         'CPU Cooler': {
-          headers: ['Manufacturer','Model','RPM','Noise(dB)','Color','Radiator Size(mm)','Height(mm)','Price($)'],
-          keys:    ['manufacturer','model','fan_rpm','noise_level','color','radiator_size','height','price']
+          headers: ['Manufacturer', 'Model', 'RPM', 'Noise(dB)', 'Color', 'Radiator Size(mm)', 'Height(mm)', 'Price($)'],
+          keys:    ['manufacturer', 'model', 'fan_rpm', 'noise_level', 'color', 'radiator_size', 'height', 'price']
         },
         'Motherboard': {
-          headers: ['Manufacturer','Model','Socket','Form','Max Memory(GB)','Slots','M.2','SATA','Color','Price($)'],
-          keys:    ['manufacturer','model','socket','form_factor','memory_max','ram_slots','m2_slots','sata_ports','color','price']
+          headers: ['Manufacturer', 'Model', 'Socket', 'Form', 'Max Memory(GB)', 'Slots', 'M.2', 'SATA', 'Color', 'Price($)'],
+          keys:    ['manufacturer', 'model', 'socket', 'form_factor', 'memory_max', 'ram_slots', 'm2_slots', 'sata_ports', 'color', 'price']
         },
         'Memory': {
-          headers: ['Manufacturer','Model','Speed(MHz)','Modules','Capacity(GB)','Type','Color','Price($)'],
-          keys:    ['manufacturer','model','speed','modules','capacity','type','color','price']
+          headers: ['Manufacturer', 'Model', 'Speed(MHz)', 'Modules', 'Capacity(GB)', 'Type', 'Color', 'Price($)'],
+          keys:    ['manufacturer', 'model', 'speed', 'modules', 'capacity', 'type', 'color', 'price']
         },
         'Storage': {
-          headers: ['Manufacturer','Model','Capacity(GB)','Type','Cache(MB)','Form','Interface','Price($)'],
-          keys:    ['manufacturer','model','capacity','type','cache','form_factor','interface','price']
+          headers: ['Manufacturer', 'Model', 'Capacity(GB)', 'Type', 'Cache(MB)', 'Form', 'Interface', 'Price($)'],
+          keys:    ['manufacturer', 'model', 'capacity', 'type', 'cache', 'form_factor', 'interface', 'price']
         },
         'GPU': {
-          headers: ['Manufacturer','Model','Chipset','Memory(GB)','Core(MHz)','Boost(MHz)','Length(mm)','TDP(W)','Power','Interface','Price($)'],
-          keys:    ['manufacturer','model','chipset','memory','core_clock','boost_clock','length','tdp','power_connectors','interface','price']
+          headers: ['Manufacturer', 'Model', 'Chipset', 'Memory(GB)', 'Core(MHz)', 'Boost(MHz)', 'Length(mm)', 'TDP(W)', 'Power', 'Interface', 'Price($)'],
+          keys:    ['manufacturer', 'model', 'chipset', 'memory', 'core_clock', 'boost_clock', 'length', 'tdp', 'power_connectors', 'interface', 'price']
         },
         'PSU': {
-          headers: ['Manufacturer','Model','Wattage(W)','Efficiency','Mod','Color','Form','Price($)'],
-          keys:    ['manufacturer','model','wattage','efficiency','modularity','color','form_factor','price']
+          headers: ['Manufacturer', 'Model', 'Wattage(W)', 'Efficiency', 'Modularity', 'Color', 'Form', 'Price($)'],
+          keys:    ['manufacturer', 'model', 'wattage', 'efficiency', 'modularity', 'color', 'form_factor', 'price']
         },
         'Case': {
-          headers: ['Manufacturer','Model','Type','Panel','HDD Bays','SSD Bays','Vol(L)','Color','Max GPU(mm)','Max CPU(mm)','PSU Form','Price($)'],
-          keys:    ['manufacturer','model','type','side_panel','hdd_bays','ssd_bays','volume','color','max_gpu_length','max_cpu_cooler_height','psu_form_factor','price']
+          headers: ['Manufacturer', 'Model', 'Type', 'Panel', 'HDD Bays', 'SSD Bays', 'Vol(L)', 'Color', 'Max GPU(mm)', 'Max CPU(mm)', 'PSU Form', 'Price($)'],
+          keys:    ['manufacturer', 'model', 'type', 'side_panel', 'hdd_bays', 'ssd_bays', 'volume', 'color', 'max_gpu_length', 'max_cpu_cooler_height', 'psu_form_factor', 'price']
         }
-    };
 
     // Populate the category dropdown
     Object.keys(displayMap).forEach(cat => {
@@ -101,14 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     select.addEventListener('change', loadParts);
-    
     searchBtn.addEventListener('click', loadParts);
     searchInput.addEventListener('keypress', e => {
         if (e.key === 'Enter') loadParts();
     });
+	sortSelect.addEventListener('change', loadParts);
 
-    loadParts();
     generateFilters(select.value);
+	loadParts();
     loadSavedQuotes();
     
     /* PARTS BROWING AND ADDING */
@@ -140,6 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fetch from backend
         const res = await fetch(url);
         const { parts } = await res.json();
+
+		// Sort by price
+		if (sortSelect.value === 'asc') {
+		parts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+		} else if (sortSelect.value === 'desc') {
+		parts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+		}
         
         // Fill the table body with data
         tableBody.innerHTML = '';
