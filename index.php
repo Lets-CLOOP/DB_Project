@@ -224,7 +224,7 @@ include __DIR__ . '/includes/header.php';
     <div class="mb-3">
       <div class="form-check form-switch mb-2">
         <input class="form-check-input" type="checkbox" id="publicCheckbox">
-        <label class="form-check-label" for="publicCheckbox">Publicly Open</label>
+        <label class="form-check-label" for="publicCheckbox">Share to Public</label>
       </div>
       <button class="btn btn-primary me-2" onclick="saveCurrent()">Save Quote</button>
       <button class="btn btn-primary" onclick="checkCompatibility()">Compatibility Check</button>
