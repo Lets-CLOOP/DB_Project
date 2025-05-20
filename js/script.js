@@ -101,6 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial data load
     select.addEventListener('change', () => {
         searchInput.value = ''; 
+		if(sortSelect) {
+			sortSelect.value = 'default';
+		}
         loadParts();
         generateFilters(select.value);
     });
