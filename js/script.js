@@ -14,26 +14,24 @@ const numericSpecsMap = {
 };
 
 const filterDisplayLabelMap = {
-  cores:                  'Cores',
-  core_clock:             'Core Clock(GHz)',
-  boost_clock:            'Boost Clock(GHz)',
-  tdp:                    'TDP(W)',
-  memory_max:             'Max Memory(GB)',
-  ram_slots:              'RAM Slots',
-  m2_slots:               'M.2 Slots',
-  sata_ports:             'SATA Ports',
-  modules:                'Modules',
-  capacity:               'Capacity(GB)',
-  fan_rpm:                'RPM',
-  noise_level:            'Noise(dB)',
-  radiator_size:          'Radiator Size(mm)',
-  height:                 'Height(mm)',
-  max_cpu_cooler_height:  'Max Cooler Height(mm)',
-  max_gpu_length:         'Max GPU Length(mm)',
-  hdd_bays:               'HDD Bays',
-  ssd_bays:               'SSD Bays',
-  wattage:                'Wattage(W)',
-  length:                 'Length(mm)'
+	//CPU specs
+	cores:                  'Cores',                core_clock:             'Core Clock(GHz)',
+	boost_clock:            'Boost Clock(GHz)',      tdp:                    'TDP(W)',
+	//Motherboard specs
+	memory_max:             'Max Memory(GB)',        ram_slots:              'RAM Slots',
+	m2_slots:               'M.2 Slots',             sata_ports:             'SATA Ports',
+	//Memory specs
+	modules:                'Modules',               capacity:               'Capacity(GB)',
+	//Cooler specs
+	fan_rpm:                'RPM',                   noise_level:            'Noise(dB)',
+	radiator_size:          'Radiator Size(mm)',     height:                 'Height(mm)',
+	//Case specs
+	max_cpu_cooler_height:  'Max Cooler Height(mm)', max_gpu_length:         'Max GPU Length(mm)',
+	hdd_bays:               'HDD Bays',              ssd_bays:               'SSD Bays',
+	//PSU specs
+	wattage:                'Wattage(W)',
+	//GPU specs
+	length:                 'Length(mm)'
 };
 
 let currentItems = [];
