@@ -147,9 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		// Sort by price
 		if (sortSelect.value === 'asc') {
-		parts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+			parts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
 		} else if (sortSelect.value === 'desc') {
-		parts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+			parts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
 		}
         
         // Fill the table body with data
