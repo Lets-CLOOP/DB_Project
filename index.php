@@ -108,7 +108,7 @@ if (isset($_GET['action'])) {
             $data = json_decode(file_get_contents('php://input'), true);
             $items = $data['items'] ?? [];
             echo json_encode(
-                runCompatibilityCheck($items),
+                checkCompatibility($items),
                 JSON_UNESCAPED_UNICODE
             );
             exit;            
