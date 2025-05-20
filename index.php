@@ -205,6 +205,18 @@ include __DIR__ . '/includes/header.php';
               type="button">Search</button>
           </div>
         </div>
+          
+        <!-- Sort by price -->
+        <div class="col-md-3">
+          <label for="sortSelect" class="form-label">Sort by price:</label>
+          <select id="sortSelect" class="form-select">
+            <option value="default">Default</option>
+            <option value="asc">Lowest to Highest</option>
+            <option value="desc">Highest to Lowest</option>
+          </select>
+        </div> 
+          
+        <!-- Spec filter -->
         <div class="row mb-3" id="filters"></div>
 
         <table class="table table-striped">
